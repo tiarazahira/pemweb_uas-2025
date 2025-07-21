@@ -1,37 +1,12 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FloraIndah - Toko Bunga Online</title>
-    <link rel="stylesheet" href="/front/assets/css/style.css">
-</head>
-<body>
+ document.addEventListener('DOMContentLoaded', function () {
 
-@include('components.partial.header')
+        // Load data dari Laravel backend
+        const products = @json($products);
 
-<main>
-    <h2>Produk Kami</h2>
-    <div id="product-list" class="product-container"></div>
-</main>
-
-@php
-    use App\Models\Bunga;
-    $products = Bunga::all();
-@endphp
-
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const products = @json($products, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT);
         const productListContainer = document.getElementById('product-list');
 
         function displayProducts() {
             productListContainer.innerHTML = '';
-
-            if (products.length === 0) {
-                productListContainer.innerHTML = '<p>Tidak ada produk tersedia saat ini.</p>';
-                return;
-            }
 
             products.forEach(product => {
                 const isOutOfStock = product.stok === 0;
@@ -44,12 +19,12 @@
                 productCard.className = 'product-card';
 
                 productCard.innerHTML = `
-                 <img src="/storage/${product.image || 'default.jpg'}" alt="${product.nama_bunga}">
+                    <img src="${product.image}" alt="${product.nama_bunga}">
                     <div class="product-info">
                         <h3>${product.nama_bunga}</h3>
                         <p class="price">Rp ${parseFloat(product.harga_satuan).toLocaleString('id-ID')}</p>
                         <div class="${stockClass}">${stockText}</div>
-                        <p>${product.deskripsi || ''}</p>
+                        <p>${product.deskripsi}</p>
                         <button class="buy-button" ${buttonDisabled}>${buttonText}</button>
                     </div>
                 `;
@@ -66,10 +41,5 @@
                 alert(`Terima kasih! Untuk memesan, silakan hubungi penjual di nomor:\n\n📞 ${sellerPhoneNumber}`);
             }
         });
+
     });
-</script>
-
-@include('components.partial.footer')
-
-</body>
-</html>
