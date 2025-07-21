@@ -1,0 +1,134 @@
+/* Pengaturan Dasar */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    background-color: #fdf8f5; /* Warna latar belakang lembut */
+    color: #333;
+}
+
+/* Header */
+header {
+    background-color: #2e8b57; /* Hijau laut */
+    color: white;
+    text-align: center;
+    padding: 2rem 1rem;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 2.5rem;
+}
+
+/* Konten Utama */
+main {
+    max-width: 1200px;
+    margin: 2rem auto; /* Posisi tengah */
+    padding: 0 1rem;
+}
+
+main h2 {
+    text-align: center;
+    color: #d95763; /* Warna pink bunga */
+    font-size: 2rem;
+    margin-bottom: 2rem;
+}
+
+/* Grid untuk Produk */
+.product-container {
+    display: grid;
+    /* Membuat kolom responsif: minimal 280px, dan akan menyesuaikan lebar layar */
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem; /* Jarak antar kartu produk */
+}
+
+/* Desain Kartu Produk */
+.product-card {
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden; /* Agar gambar tidak keluar dari border radius */
+    transition: transform 0.2s;
+    display: flex;
+    flex-direction: column;
+}
+
+.product-card:hover {
+    transform: translateY(-5px); /* Efek mengangkat saat kursor di atas */
+}
+
+.product-card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover; /* Gambar akan terpotong rapi */
+}
+
+.product-info {
+    padding: 1.5rem;
+    flex-grow: 1; /* Memastikan info mengisi ruang yang tersisa */
+    display: flex;
+    flex-direction: column;
+}
+
+.product-info h3 {
+    margin: 0 0 0.5rem 0;
+    color: #2e8b57;
+}
+
+.product-info .price {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #d95763;
+    margin-bottom: 1rem;
+}
+
+.product-info p {
+    flex-grow: 1; /* Mendorong tombol ke bawah */
+    margin: 0 0 1rem 0;
+    font-size: 0.9rem;
+    line-height: 1.5;
+}
+/* Gaya untuk Info Stok */
+.product-stock {
+    font-size: 0.95rem;
+    color: #555;
+    margin-bottom: 1rem;
+}
+
+/* Gaya khusus jika stok habis */
+.product-stock.out-of-stock {
+    color: #e74c3c; /* Warna merah untuk stok habis */
+    font-weight: bold;
+}
+
+/* Gaya untuk tombol yang dinonaktifkan */
+.buy-button:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+}
+.buy-button {
+    background-color: #2e8b57;
+    color: white;
+    border: none;
+    padding: 0.8rem 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: center;
+    font-size: 1rem;
+    font-weight: bold;
+    transition: background-color 0.2s;
+}
+
+.buy-button:hover {
+    background-color: #256d45; /* Warna lebih gelap saat hover */
+}
+
+
+/* Footer */
+footer {
+    text-align: center;
+    padding: 1.5rem;
+    margin-top: 2rem;
+    background-color: #f4f4f4;
+    color: #555;
+    border-top: 1px solid #ddd;
+}

@@ -1,0 +1,511 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "My API",
+        "description": "This is the API documentation for My API.",
+        "termsOfService": "https://pemweb_uas.test/terms",
+        "contact": {
+            "name": "API Support",
+            "email": "support@example.com"
+        },
+        "license": {
+            "name": "Apache 2.0",
+            "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+        },
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "https://pemweb_uas.test",
+            "description": "Local API Server"
+        }
+    ],
+    "paths": {
+        "/api/bungas": {
+            "get": {
+                "tags": [
+                    "Bungas"
+                ],
+                "summary": "Get all bunga products",
+                "description": "Returns a list of all bunga data.",
+                "operationId": "getBungas",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "success"
+                                        },
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/Bunga"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized - Invalid API Key"
+                    }
+                },
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Bungas"
+                ],
+                "summary": "Create a new bunga product",
+                "description": "Stores a new bunga and returns the encrypted response.",
+                "operationId": "storeBunga",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "nama_bunga",
+                                    "jenis_bunga",
+                                    "stok",
+                                    "harga_satuan"
+                                ],
+                                "properties": {
+                                    "nama_bunga": {
+                                        "type": "string",
+                                        "example": "Melati Putih"
+                                    },
+                                    "jenis_bunga": {
+                                        "type": "string",
+                                        "enum": [
+                                            "segar",
+                                            "hias",
+                                            "kering",
+                                            "bouquet"
+                                        ],
+                                        "example": "segar"
+                                    },
+                                    "stok": {
+                                        "type": "integer",
+                                        "example": 500
+                                    },
+                                    "harga_satuan": {
+                                        "type": "number",
+                                        "format": "float",
+                                        "example": 20000
+                                    },
+                                    "deskripsi": {
+                                        "type": "string",
+                                        "example": "Melati harum segar."
+                                    },
+                                    "image": {
+                                        "type": "string",
+                                        "format": "url",
+                                        "example": "https://example.com/images/melati.jpg"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Bunga created",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "type": "string",
+                                            "example": "eyJpdiI6In..."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Error storing bunga",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "Error storing bunga: ..."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/bungas/{id}": {
+            "get": {
+                "tags": [
+                    "Bungas"
+                ],
+                "summary": "Get a bunga by ID",
+                "description": "Returns a single bunga item",
+                "operationId": "getBungaById",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Bunga ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "success"
+                                        },
+                                        "data": {
+                                            "$ref": "#/components/schemas/Bunga"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Bunga not found"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    }
+                },
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "Bungas"
+                ],
+                "summary": "Update a bunga",
+                "description": "Updates an existing bunga product",
+                "operationId": "updateBunga",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Bunga ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "nama_bunga": {
+                                        "type": "string",
+                                        "example": "Mawar Pink"
+                                    },
+                                    "jenis_bunga": {
+                                        "type": "string",
+                                        "enum": [
+                                            "segar",
+                                            "hias",
+                                            "kering",
+                                            "bouquet"
+                                        ],
+                                        "example": "hias"
+                                    },
+                                    "stok": {
+                                        "type": "integer",
+                                        "example": 750
+                                    },
+                                    "harga_satuan": {
+                                        "type": "number",
+                                        "format": "float",
+                                        "example": 18000
+                                    },
+                                    "deskripsi": {
+                                        "type": "string",
+                                        "example": "Bunga mawar hias untuk dekorasi"
+                                    },
+                                    "image": {
+                                        "type": "string",
+                                        "format": "url",
+                                        "example": "https://example.com/images/mawar.jpg"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Bunga updated successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "type": "string",
+                                            "example": "eyJpdiI6In..."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Bunga not found"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    }
+                },
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Bungas"
+                ],
+                "summary": "Delete a bunga",
+                "description": "Deletes a bunga by ID",
+                "operationId": "deleteBunga",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Bunga ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Bunga deleted successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "type": "string",
+                                            "example": "eyJpdiI6In..."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Bunga not found"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    }
+                },
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/bungas/decrypt": {
+            "post": {
+                "tags": [
+                    "Bungas"
+                ],
+                "summary": "Decrypt encrypted bunga data",
+                "description": "Decrypts the encrypted bunga response.",
+                "operationId": "decryptBungaResponse",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "data"
+                                ],
+                                "properties": {
+                                    "data": {
+                                        "type": "string",
+                                        "example": "eyJpdiI6IjFPU2h..."
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Decrypted response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "success"
+                                        },
+                                        "data": {
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Decryption failed",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Decrypt Failed"
+                                        },
+                                        "error": {
+                                            "type": "string",
+                                            "example": "The payload is invalid."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ]
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "Bunga": {
+                "title": "Product Bunga TiARA",
+                "required": [
+                    "id",
+                    "nama_bunga",
+                    "jenis_bunga",
+                    "stok",
+                    "harga_satuan"
+                ],
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "nama_bunga": {
+                        "type": "string",
+                        "example": "Mawar Merah"
+                    },
+                    "jenis_bunga": {
+                        "type": "string",
+                        "enum": [
+                            "segar",
+                            "hias",
+                            "kering",
+                            "bouquet"
+                        ],
+                        "example": "segar"
+                    },
+                    "stok": {
+                        "type": "integer",
+                        "example": 1000
+                    },
+                    "harga_satuan": {
+                        "type": "number",
+                        "format": "float",
+                        "example": 15000
+                    },
+                    "deskripsi": {
+                        "type": "string",
+                        "example": "Bunga mawar segar dari pegunungan."
+                    },
+                    "image": {
+                        "type": "string",
+                        "format": "url",
+                        "example": "https://example.com/images/mawar.jpg"
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2025-07-21T15:13:23Z"
+                    },
+                    "updated_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2025-07-21T15:13:23Z"
+                    }
+                },
+                "type": "object"
+            }
+        },
+        "securitySchemes": {
+            "ApiKeyAuth": {
+                "type": "apiKey",
+                "name": "X-API-KEY",
+                "in": "header"
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Bungas",
+            "description": "Bungas"
+        }
+    ]
+}

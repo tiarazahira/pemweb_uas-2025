@@ -53,7 +53,8 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->navigationGroups([
                 NavigationGroup::make()
-                    ->label('Administration'),
+                    ->label('Administration')
+                    ->label('Crud'),
             ])
             ->userMenuItems([
                 'profile' => MenuItem::make()
