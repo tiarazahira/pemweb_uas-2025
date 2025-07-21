@@ -58,6 +58,7 @@ class BungaResource extends Resource
                 Tables\Columns\TextColumn::make('nama_bunga')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('jenis_bunga'),
+                Tables\Columns\TextColumn::make('deskripsi'),
                 Tables\Columns\TextColumn::make('stok')
                     ->numeric()
                     ->sortable(),
