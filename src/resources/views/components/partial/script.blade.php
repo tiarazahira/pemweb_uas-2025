@@ -1,3 +1,4 @@
+
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         const products = @json($products, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT);
@@ -22,7 +23,7 @@
                 productCard.className = 'product-card';
 
                 productCard.innerHTML = `
-                    <img src="${product.image || '/front/assets/img/default.jpg'}" alt="${product.nama_bunga}">
+                 <img src="/storage/${product.image || 'default.jpg'}" alt="${product.nama_bunga}">
                     <div class="product-info">
                         <h3>${product.nama_bunga}</h3>
                         <p class="price">Rp ${parseFloat(product.harga_satuan).toLocaleString('id-ID')}</p>
